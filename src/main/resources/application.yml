@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: spring-boot-team-spirit
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true

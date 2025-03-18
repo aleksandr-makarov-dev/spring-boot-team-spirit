@@ -7,12 +7,14 @@ import com.aleksandrmakarov.springbootteamspirit.model.response.ProjectResponse;
 import com.aleksandrmakarov.springbootteamspirit.repository.ProjectRepository;
 import com.aleksandrmakarov.springbootteamspirit.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
@@ -38,7 +40,11 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectEntity project = projectMapper.mapToProjectEntity(request);
         project.setCreatedAt(LocalDateTime.now());
 
-        return projectMapper.mapToProjectResponse(projectRepository.save(project));
+        ProjectEntity createdProject = projectRepository.save(project);
+
+        log.info("project '{}' was created.", createdProject.getId());
+
+        return projectMapper.mapToProjectResponse(createdProject);
     }
 
     @Override
@@ -47,7 +53,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         project.setName(request.name());
 
-        return projectMapper.mapToProjectResponse(projectRepository.save(project));
+        ProjectEntity updatedProject = projectRepository.save(project);
+
+        log.info("project '{}' was updated.", updatedProject.getId());
+
+        return projectMapper.mapToProjectResponse(updatedProject);
     }
 
     @Override
@@ -55,6 +65,8 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectEntity project = getByIdOrThrow(id);
 
         projectRepository.delete(project);
+
+        log.info("project '{}' was deleted.", project);
     }
 
     private ProjectEntity getByIdOrThrow(Long id) {

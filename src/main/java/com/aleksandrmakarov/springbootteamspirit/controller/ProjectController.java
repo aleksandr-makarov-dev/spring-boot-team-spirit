@@ -1,20 +1,17 @@
 package com.aleksandrmakarov.springbootteamspirit.controller;
 
 import com.aleksandrmakarov.springbootteamspirit.model.request.ProjectRequest;
-import com.aleksandrmakarov.springbootteamspirit.model.response.ProjectResponse;
-import com.aleksandrmakarov.springbootteamspirit.repository.ProjectRepository;
 import com.aleksandrmakarov.springbootteamspirit.service.ProjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
-@Validated
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -30,13 +27,13 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProjectRequest request) {
+    public ResponseEntity<?> create(@Valid @RequestBody ProjectRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.create(request));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateById(@PathVariable Long id, @RequestBody ProjectRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.update(id, request));
+    public ResponseEntity<?> updateById(@PathVariable Long id, @Valid @RequestBody ProjectRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.updateById(id, request));
     }
 
     @DeleteMapping("{id}")

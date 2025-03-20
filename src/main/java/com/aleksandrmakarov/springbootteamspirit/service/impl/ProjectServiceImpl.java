@@ -9,6 +9,7 @@ import com.aleksandrmakarov.springbootteamspirit.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public ProjectResponse create(ProjectRequest request) {
         ProjectEntity project = projectMapper.mapToProjectEntity(request);
         project.setCreatedAt(LocalDateTime.now());
@@ -48,7 +50,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse update(Long id, ProjectRequest request) {
+    @Transactional
+    public ProjectResponse updateById(Long id, ProjectRequest request) {
         ProjectEntity project = getByIdOrThrow(id);
 
         project.setName(request.name());
@@ -61,6 +64,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         ProjectEntity project = getByIdOrThrow(id);
 

@@ -12,7 +12,7 @@ public interface ProjectService {
 
     ProjectResponse create(ProjectRequest request);
 
-    ProjectResponse update(Long id, ProjectRequest request);
+    ProjectResponse updateById(Long id, ProjectRequest request);
 
     void deleteById(Long id);
 }

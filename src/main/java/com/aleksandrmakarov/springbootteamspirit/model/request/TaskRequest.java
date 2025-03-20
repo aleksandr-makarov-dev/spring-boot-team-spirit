@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDateTime;
-
 public record TaskRequest(
         @NotBlank(message = "Title is required and cannot be empty.")
         @Size(min = 5, max = 150, message = "Title must be between {min} and {max} characters long.")
@@ -21,11 +19,14 @@ public record TaskRequest(
         String description,
 
         @NotNull(message = "Status is required and cannot be empty.")
-        @ValueOfEnum(enumClass = TaskStatus.class, message = "Invalid status. Allowed values: PENDING, ACTIVE, COMPLETED, FAILED, ARCHIVED")
+//        @ValueOfEnum(enumClass = TaskStatus.class, message = "Invalid status. Allowed values: PENDING, ACTIVE, COMPLETED, FAILED, ARCHIVED")
         TaskStatus status,
 
         @FutureOrPresent(message = "Due date must be in the present or future.")
         LocalDateTime dueDate,
+
+        @FutureOrPresent(message = "Completed at date must be in the present or future.")
+        LocalDateTime completedAt,
 
         @NotNull(message = "Project ID is required and cannot be empty.")
         @Positive(message = "Project ID must be a positive number.")
